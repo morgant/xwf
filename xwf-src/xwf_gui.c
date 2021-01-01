@@ -2050,7 +2050,7 @@ new_top (char *path, char *xap, char *trash, GList *reg, mc_mime_reg_t *mreg,
 #endif
 
 	accel = gtk_accel_group_new ();
-	gtk_accel_group_attach (accel, GTK_OBJECT(top));
+	gtk_window_add_accel_group (GTK_WINDOW(top), accel);
 
 	gtk_widget_add_accelerator (GTK_WIDGET(
 			GTK_CLIST(ctree)->column[COL_NAME].button), "clicked", accel,

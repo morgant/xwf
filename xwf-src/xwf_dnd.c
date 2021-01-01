@@ -127,6 +127,7 @@ on_drag_rcv_motion (GtkWidget *dest, GdkDragContext *context,
 		/* scroll up the "scrolled window"
 		 */
 		/* doesn't work! */
+		/*
 		GdkEventButton event;
 		event.window =
 			GTK_RANGE(
@@ -143,6 +144,7 @@ on_drag_rcv_motion (GtkWidget *dest, GdkDragContext *context,
 
 		event.type = GDK_BUTTON_RELEASE;
 		event.time = gdk_time_get();
+		*/
 		/* gdk_event_put ((GdkEvent *)&event); */
 		return (TRUE);
 	}
