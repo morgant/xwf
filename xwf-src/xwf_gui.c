@@ -2228,7 +2228,7 @@ gui_main (char *path, char *xap_path, char *trash, char *reg_file, wgeo_t *geo,
 	GtkWidget *top, *label, *new_win;
 	mc_mime_reg_t *mime_reg;
 
-	top = gtk_window_new (GTK_WINDOW_DIALOG);
+	top = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
 	label = gtk_label_new (" Xwf is coming up ..");
 	gtk_container_add (GTK_CONTAINER(top), label);

@@ -109,11 +109,9 @@ create_xfi (void)
   gtk_container_set_border_width (GTK_CONTAINER (menubar), 1);
   GTK_WIDGET_SET_FLAGS (menubar, GTK_CAN_FOCUS);
 
-  mfile = gtk_menu_item_new_with_label ("");
-  tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (mfile)->child),
-                                   "_File");
+  mfile = gtk_menu_item_new_with_mnemonic ("_File");
   gtk_widget_add_accelerator (mfile, "activate_item", accel_group,
-                              tmp_key, GDK_MOD1_MASK, 0);
+                              GDK_f, GDK_MOD1_MASK, 0);
   gtk_widget_ref (mfile);
   gtk_object_set_data_full (GTK_OBJECT (xfi), "mfile", mfile,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -125,13 +123,8 @@ create_xfi (void)
   gtk_object_set_data_full (GTK_OBJECT (xfi), "mfile_menu", mfile_menu,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (mfile), mfile_menu);
-  mfile_menu_accels = gtk_menu_ensure_uline_accel_group (GTK_MENU (mfile_menu));
 
-  msave = gtk_menu_item_new_with_label ("");
-  tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (msave)->child),
-                                   "_Save as ..");
-  gtk_widget_add_accelerator (msave, "activate_item", mfile_menu_accels,
-                              tmp_key, 0, 0);
+  msave = gtk_menu_item_new_with_mnemonic ("_Save as...");
   gtk_widget_ref (msave);
   gtk_object_set_data_full (GTK_OBJECT (xfi), "msave", msave,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -150,11 +143,7 @@ create_xfi (void)
   gtk_container_add (GTK_CONTAINER (mfile_menu), separator1);
   gtk_widget_set_sensitive (separator1, FALSE);
 
-  mquit = gtk_menu_item_new_with_label ("");
-  tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (mquit)->child),
-                                   "_Quit");
-  gtk_widget_add_accelerator (mquit, "activate_item", mfile_menu_accels,
-                              tmp_key, 0, 0);
+  mquit = gtk_menu_item_new_with_mnemonic ("_Quit");
   gtk_widget_ref (mquit);
   gtk_object_set_data_full (GTK_OBJECT (xfi), "mquit", mquit,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -165,11 +154,9 @@ create_xfi (void)
                               GDK_q, GDK_MOD1_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  medit = gtk_menu_item_new_with_label ("");
-  tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (medit)->child),
-                                   "_Edit");
+  medit = gtk_menu_item_new_with_mnemonic ("_Edit");
   gtk_widget_add_accelerator (medit, "activate_item", accel_group,
-                              tmp_key, GDK_MOD1_MASK, 0);
+                              GDK_e, GDK_MOD1_MASK, 0);
   gtk_widget_ref (medit);
   gtk_object_set_data_full (GTK_OBJECT (xfi), "medit", medit,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -181,13 +168,8 @@ create_xfi (void)
   gtk_object_set_data_full (GTK_OBJECT (xfi), "medit_menu", medit_menu,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (medit), medit_menu);
-  medit_menu_accels = gtk_menu_ensure_uline_accel_group (GTK_MENU (medit_menu));
 
-  m_select_all = gtk_menu_item_new_with_label ("");
-  tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (m_select_all)->child),
-                                   "Select _all");
-  gtk_widget_add_accelerator (m_select_all, "activate_item", medit_menu_accels,
-                              tmp_key, 0, 0);
+  m_select_all = gtk_menu_item_new_with_mnemonic ("Select _all");
   gtk_widget_ref (m_select_all);
   gtk_object_set_data_full (GTK_OBJECT (xfi), "m_select_all", m_select_all,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -197,11 +179,7 @@ create_xfi (void)
                               GDK_a, GDK_MOD1_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  m_unselect_all = gtk_menu_item_new_with_label ("");
-  tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (m_unselect_all)->child),
-                                   "_Unselect all");
-  gtk_widget_add_accelerator (m_unselect_all, "activate_item", medit_menu_accels,
-                              tmp_key, 0, 0);
+  m_unselect_all = gtk_menu_item_new_with_mnemonic ("_Unselect all");
   gtk_widget_ref (m_unselect_all);
   gtk_object_set_data_full (GTK_OBJECT (xfi), "m_unselect_all", m_unselect_all,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -211,11 +189,9 @@ create_xfi (void)
                               GDK_u, GDK_MOD1_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  mhelp = gtk_menu_item_new_with_label ("");
-  tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (mhelp)->child),
-                                   "_Help");
+  mhelp = gtk_menu_item_new_with_mnemonic ("_Help");
   gtk_widget_add_accelerator (mhelp, "activate_item", accel_group,
-                              tmp_key, GDK_MOD1_MASK, 0);
+                              GDK_h, GDK_MOD1_MASK, 0);
   gtk_widget_ref (mhelp);
   gtk_object_set_data_full (GTK_OBJECT (xfi), "mhelp", mhelp,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -228,13 +204,8 @@ create_xfi (void)
   gtk_object_set_data_full (GTK_OBJECT (xfi), "mhelp_menu", mhelp_menu,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (mhelp), mhelp_menu);
-  mhelp_menu_accels = gtk_menu_ensure_uline_accel_group (GTK_MENU (mhelp_menu));
 
-  mabout = gtk_menu_item_new_with_label ("");
-  tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (mabout)->child),
-                                   "_About");
-  gtk_widget_add_accelerator (mabout, "activate_item", mhelp_menu_accels,
-                              tmp_key, 0, 0);
+  mabout = gtk_menu_item_new_with_mnemonic ("_About");
   gtk_widget_ref (mabout);
   gtk_object_set_data_full (GTK_OBJECT (xfi), "mabout", mabout,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -645,7 +616,7 @@ create_wabout (void)
 
   accel_group = gtk_accel_group_new ();
 
-  wabout = gtk_window_new (GTK_WINDOW_DIALOG);
+  wabout = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_object_set_data (GTK_OBJECT (wabout), "wabout", wabout);
   gtk_window_set_title (GTK_WINDOW (wabout), "About XFI");
   gtk_window_set_position (GTK_WINDOW (wabout), GTK_WIN_POS_MOUSE);
@@ -749,7 +720,6 @@ GtkWidget*
 create_pmenu (void)
 {
   GtkWidget *pmenu;
-  GtkAccelGroup *pmenu_accels;
   GtkWidget *separator2;
   GtkWidget *pm_opendir;
   GtkWidget *separator4;
@@ -758,7 +728,6 @@ create_pmenu (void)
 
   pmenu = gtk_menu_new ();
   gtk_object_set_data (GTK_OBJECT (pmenu), "pmenu", pmenu);
-  pmenu_accels = gtk_menu_ensure_uline_accel_group (GTK_MENU (pmenu));
 
   separator2 = gtk_menu_item_new ();
   gtk_widget_ref (separator2);

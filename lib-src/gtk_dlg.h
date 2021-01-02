@@ -22,8 +22,6 @@
 #ifndef __GTK_DLG_H__
 #define __GTK_DLG_H__
 
-#define GTK_WINDOW_DIALOG	GTK_WINDOW_TOPLEVEL
-
 #define DLG_OK			(1<<0)
 #define DLG_CANCEL		(1<<1)
 #define DLG_YES			(1<<2)
