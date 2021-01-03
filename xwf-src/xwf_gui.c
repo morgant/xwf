@@ -113,7 +113,7 @@ gui_init (int *argc, char ***argv, char *user_rc)
 	gtk_init (argc, argv);
 
 	gtk_rc_add_default_file (XWF_RC);
-	gtk_rc_parse (DATA_DIR"/xap/"XAP_RC);
+	gtk_rc_parse (DATA_DIR"/xwf/"XWF_RC);
 	gtk_rc_parse (user_rc);
 }
 
@@ -258,7 +258,7 @@ void
 cb_open_trash (GtkWidget *item, void *data)
 {
 	cfg_t *win = (cfg *)data;
-	new_top (win->trash, win->xap, win->trash, win->reg,
+	new_top (win->trash, win->xwf, win->trash, win->reg,
 				(mc_mime_reg_t*) win->mreg,
 				win->width, win->height, 0);
 }
@@ -290,13 +290,13 @@ cb_new_window (GtkWidget *widget, GtkCTree *ctree)
 				}
 			}
 			en = gtk_ctree_node_get_row_data (GTK_CTREE(ctree), node);
-			new_top (uri_clear_path(en->path), win->xap, win->trash, win->reg,
+			new_top (uri_clear_path(en->path), win->xwf, win->trash, win->reg,
 						(mc_mime_reg_t *)win->mreg,
 						win->width, win->height, en->flags);
 		}
 	} else {
 		en = gtk_ctree_node_get_row_data (ctree, node);
-		new_top (uri_clear_path(en->path), win->xap, win->trash, win->reg,
+		new_top (uri_clear_path(en->path), win->xwf, win->trash, win->reg,
 					(mc_mime_reg_t *)win->mreg,
 					win->width, win->height, en->flags);
 	}
@@ -1327,7 +1327,7 @@ on_double_click (GtkWidget *ctree, GdkEventButton *event, void *menu)
 			} else {
 				char *p;
 				p = mc_app_by_file (win->mreg, en->path);
-				dlg_open_with (win->xap, p ? p : DEF_APP, en->path);
+				dlg_open_with (win->xwf, p ? p : DEF_APP, en->path);
 			}
 		}
 		chdir (wd);
@@ -1714,14 +1714,14 @@ cb_open_with (GtkWidget *item, GtkCTree *ctree)
 		en = gtk_ctree_node_get_row_data (GTK_CTREE(ctree), node);
 		win = gtk_object_get_user_data (GTK_OBJECT(ctree));
 		if (EN_IS_DIR(en)) {
-			new_top (uri_clear_path(en->path), win->xap, win->trash, win->reg,
+			new_top (uri_clear_path(en->path), win->xwf, win->trash, win->reg,
 						(mc_mime_reg_t *)win->mreg,
 						win->width, win->height, en->flags);
 		} else {
 			prg = reg_app_by_file (win->reg, en->path);
 			if (!prg)
 				prg = mc_app_by_file (win->mreg, en->path);
-			dlg_open_with (win->xap, prg ? prg : DEF_APP, en->path);
+			dlg_open_with (win->xwf, prg ? prg : DEF_APP, en->path);
 		}
 	}
 }
@@ -1840,7 +1840,7 @@ on_destroy (GtkWidget *top, cfg_t *win)
 	gtk_timeout_remove (win->timer);
 	history_save (win->history);
 	g_free (win->trash);
-	g_free (win->xap);
+	g_free (win->xwf);
 	g_free (win);
 
 	if (!top_has_more ()) {
@@ -1891,14 +1891,14 @@ static void
 cb_exec (GtkWidget *top, gpointer data)
 {
 	cfg_t *win = (cfg_t *) data;
-	dlg_execute (win->xap, NULL);
+	dlg_execute (win->xwf, NULL);
 }
 
 /*
  * create a new toplevel window
  */
 static GtkWidget *
-new_top (char *path, char *xap, char *trash, GList *reg, mc_mime_reg_t *mreg,
+new_top (char *path, char *xwf, char *trash, GList *reg, mc_mime_reg_t *mreg,
 			int width, int height, int flags)
 {
 	GtkWidget *top, *box, *scrolled, *ctree, **menu, *menu_item;
@@ -2033,7 +2033,7 @@ new_top (char *path, char *xap, char *trash, GList *reg, mc_mime_reg_t *mreg,
 
 	win->compare = GTK_CLIST(ctree)->compare;
 	win->trash = g_strdup (trash);
-	win->xap = g_strdup (xap);
+	win->xwf = g_strdup (xwf);
 	win->reg = reg;
 	win->width = width;
 	win->height= height;
@@ -2190,7 +2190,7 @@ new_top (char *path, char *xap, char *trash, GList *reg, mc_mime_reg_t *mreg,
  * create pixmaps and create a new toplevel tree widget
  */
 void
-gui_main (char *path, char *xap_path, char *trash, char *reg_file, wgeo_t *geo,
+gui_main (char *path, char *xwf_path, char *trash, char *reg_file, wgeo_t *geo,
 			int flags)
 {
 	GList *reg;
@@ -2236,7 +2236,7 @@ gui_main (char *path, char *xap_path, char *trash, char *reg_file, wgeo_t *geo,
 		dlg_error(path, strerror(errno));
 		return;
 	}
-	new_win = new_top (path, xap_path, trash, reg, mime_reg, geo->width,
+	new_win = new_top (path, xwf_path, trash, reg, mime_reg, geo->width,
 				geo->height, flags);
 	if (geo->x > -1 && geo->y > -1) {
 		gtk_widget_set_uposition (new_win, geo->x, geo->y);

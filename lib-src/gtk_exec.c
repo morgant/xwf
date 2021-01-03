@@ -69,7 +69,7 @@ static void
 create_item_list (char *path, GtkWidget *combo)
 {
 	GList *list = NULL, *tmp_list;
-	DIR *xap, *app;
+	DIR *xwf, *app;
 	struct dirent *de, *deApp;
 	char compl[PATH_MAX+1];
 	char file[PATH_MAX+1];
@@ -83,10 +83,10 @@ create_item_list (char *path, GtkWidget *combo)
 #ifdef DEBUG
 	printf ("create_item_list() path=%s\n", path);
 #endif
-	xap = opendir (path);
-	if (!xap)
+	xwf = opendir (path);
+	if (!xwf)
 		return ;
-	while ((de = readdir(xap)) != NULL) {
+	while ((de = readdir(xwf)) != NULL) {
 		if (*de->d_name == '.')
 			continue;
 		sprintf (compl, "%s%c%s", path, G_DIR_SEPARATOR, de->d_name);
@@ -126,7 +126,7 @@ create_item_list (char *path, GtkWidget *combo)
 		}
 		closedir(app);
 	}
-	closedir (xap);
+	closedir (xwf);
 
 	if (list) {
 		gtk_list_clear_items (GTK_LIST(GTK_COMBO(combo)->list), 0, -1);
@@ -328,7 +328,7 @@ create_w_exec (dlg_t *dlg, char *file)
  * create a modal dialog and handle it
  */
 gint
-dlg_open_with (char *xap, char *defval, char *file)
+dlg_open_with (char *xwf, char *defval, char *file)
 {
 	char cmd[PATH_MAX*3 + 6];
 	dlg_t *dlg;
@@ -344,7 +344,7 @@ dlg_open_with (char *xap, char *defval, char *file)
 
 	/* gtk_widget_grab_default (ok); */
 
-	create_item_list (xap, dlg->combo);
+	create_item_list (xwf, dlg->combo);
 	if (defval) {
 		gtk_entry_set_text (GTK_ENTRY(GTK_COMBO(dlg->combo)->entry), defval);
 		gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(dlg->combo)->entry),0,-1);

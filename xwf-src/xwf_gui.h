@@ -30,6 +30,6 @@ typedef struct {
 } wgeo_t;
 
 void gui_init (int *argc, char ***argv, char *rc);
-void gui_main (char *path, char *xap, char *trash, char *reg, wgeo_t *,int);
+void gui_main (char *path, char *xwf, char *trash, char *reg, wgeo_t *,int);
 #endif
 

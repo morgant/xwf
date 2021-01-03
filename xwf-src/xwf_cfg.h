@@ -27,7 +27,7 @@
 typedef struct {
 	void *compare;
 	char *trash;	/* xwf trash dir */
-	char *xap;		/* xap home-dir, default: $HOME/.xap */
+	char *xwf;		/* xwf home-dir, default: $HOME/.xwf */
 	GList *reg;		/* registered programs */
 	void *mreg;
 	int dnd_row;

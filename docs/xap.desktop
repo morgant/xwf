@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=X Application Panel
-Name[de]=X Programm Panel
-Exec=xap
-Terminal=0
-Type=Application
-Icon=mini-xap.xpm

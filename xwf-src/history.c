@@ -45,7 +45,7 @@ history_init (char *path)
 	FILE *fp;
 	int len;
 
-	sprintf (file, "%s/.xap/xwf.his", getenv ("HOME"));
+	sprintf (file, "%s/.xwf/xwf.his", getenv ("HOME"));
 	fp = fopen (file, "r");
 	if (fp) {
 		while (fgets (line, LINESIZE, fp) != NULL) {
@@ -132,7 +132,7 @@ history_save (GList *list)
 	char path[PATH_MAX+1];
 	FILE *fp;
 
-	sprintf (path, "%s/.xap/xwf.his", getenv ("HOME"));
+	sprintf (path, "%s/.xwf/xwf.his", getenv ("HOME"));
 	fp = fopen (path, "w");
 	if (!fp)
 		return 0;

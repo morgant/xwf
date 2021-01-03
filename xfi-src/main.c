@@ -44,7 +44,7 @@ extern GtkWidget *wPopup;
 extern GList *sReg;
 
 #ifndef REG_FILE
-#define REG_FILE ".xap/xwf.reg"
+#define REG_FILE ".xwf/xwf.reg"
 #endif
 #define XFI_RC "xfi.rc"
 
@@ -62,8 +62,8 @@ main (int argc, char *argv[])
 	gtk_set_locale ();
 	gtk_init (&argc, &argv);
 
-	sprintf (user_rc, "%s/.xap/%s", home, XFI_RC);
-	gtk_rc_parse (DATA_DIR"/xap/"XAP_RC);
+	sprintf (user_rc, "%s/.xwf/%s", home, XFI_RC);
+	gtk_rc_parse (DATA_DIR"/xwf/"XWF_RC);
 	gtk_rc_parse (user_rc);
 
 	sprintf (reg, "%s/%s", getenv ("HOME"), REG_FILE);

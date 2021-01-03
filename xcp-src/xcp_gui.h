@@ -22,7 +22,7 @@
 #ifndef __XCP_GUI_H__
 #define __XCP_GUI_H__
 
-#define XAP_PATH ".xap"
+#define XWF_PATH ".xwf"
 #define XCP_RC	"xcp.rc"
 
 typedef struct {

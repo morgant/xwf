@@ -94,7 +94,7 @@ main (int argc, char *argv[])
 
 	if (nice (12) != 0)
 		printf ("Warning: nice() failed!\n");
-	sprintf (path, "%s/%s", getenv("HOME"), XAP_PATH);
+	sprintf (path, "%s/%s", getenv("HOME"), XWF_PATH);
 	sprintf (rc, "%s/%s", path, XCP_RC);
 	gui_init (&argc, &argv, rc);
 

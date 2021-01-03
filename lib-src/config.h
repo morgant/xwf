@@ -50,6 +50,7 @@
 #define NAME_MAX 255 /* default for linux */
 #endif
 
+/*
 #ifndef mode_t
 #define mode_t unsigned int
 #endif
@@ -61,6 +62,7 @@
 #ifndef gid_t
 #define gid_t unsigned int
 #endif
+*/
 
 #ifndef SHELL
 #define SHELL "/bin/sh"

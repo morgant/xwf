@@ -22,6 +22,6 @@
 #ifndef __GTK_EXEC_H__
 #define __GTK_EXEC_H__
 
-int dlg_open_with (char *xap, char *defval, char *file);
+int dlg_open_with (char *xwf, char *defval, char *file);
 #define dlg_execute(x,d) dlg_open_with(x, d, NULL)
 #endif

@@ -50,7 +50,7 @@ extern int optind;
 #define VERSION "(not defined)"
 #endif
 #define TRASH_DIR ".trash"
-#define BASE_DIR ".xap"
+#define BASE_DIR ".xwf"
 
 int
 main (int argc, char *argv[])
@@ -68,8 +68,8 @@ main (int argc, char *argv[])
 	wgeo_t geo = { -1, -1, 400, 480 };
 
 	setlocale (LC_ALL, "");
-	bindtextdomain ("xap", LOCALEDIR);
-	textdomain ("xap");
+	bindtextdomain ("xwf", LOCALEDIR);
+	textdomain ("xwf");
 
 	sprintf (rc, "%s/%s/%s", path, BASE_DIR, "xwf.rc");
 
