@@ -1829,36 +1829,6 @@ cb_register (GtkWidget *item, GtkWidget *ctree)
 }
 
 /*
- * call xpg with the marked files as arguments
- */
-void
-cb_encrypt (GtkWidget *item, GtkWidget *ctree)
-{
-	GtkCTreeNode *node;
-	int num, i;
-	char **files;
-	GList *selection;
-	entry_t *en;
-
-	if (!GTK_CLIST(ctree)->selection)
-		return;
-	num = count_selection (GTK_CTREE(ctree), &node);
-	files = g_malloc (sizeof (char *) * num + 1);
-	if (!files)
-		return;
-	i = 0;
-	files[i++] = INSTDIR"/lib/xap/xpg";
-	for (selection = GTK_CLIST(ctree)->selection;
-				selection; selection = selection->next) {
-		node = selection->data;
-		en = gtk_ctree_node_get_row_data (GTK_CTREE(ctree), node);
-		files[i++] = en->path;
-	}
-	io_system_var (files, num+1);
-	g_free (files);
-}
-
-/*
  */
 void
 on_destroy (GtkWidget *top, cfg_t *win)
@@ -1983,7 +1953,6 @@ new_top (char *path, char *xap, char *trash, GList *reg, mc_mime_reg_t *mreg,
 		{ NULL,					NULL,			0},
 		{ _("Properties .."),	cb_props,		0},
 		{ _("Register  .."),	cb_register,	0, GDK_j, GDK_MOD1_MASK},
-		{ _("En-/Decrypt .."),	cb_encrypt,		0},
 		{ NULL,					NULL,			0},
 		{ _("Execute .."),		cb_exec, 		WINCFG},
 		{ _("Close window"),	cb_destroy,TOPWIN, GDK_w, GDK_MOD1_MASK},
