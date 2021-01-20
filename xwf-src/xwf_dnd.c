@@ -346,7 +346,7 @@ on_drag_data (GtkWidget *ctree, GdkDragContext *context, gint x, gint y,
 					perror (target->path);
 				uri_free_list (list);
 			} else {
-				args[0] = PLUGINDIR"/xcp";
+				args[0] = "xcp";
 				args[1] = xcp_opt;
 				for (i = 0; i < nitems; i++) {
 					args[i+2] = ((uri_t *)(g_list_nth (list, i)->data))->url;
@@ -381,7 +381,7 @@ on_drag_data (GtkWidget *ctree, GdkDragContext *context, gint x, gint y,
 				} else if (u->type == URI_LOCAL) {
 					/* printf (" %s -> %s\n", u->url, en->path); */
 					args = g_malloc (sizeof(char*) * (1 + 1 + 2));
-					args[0] = PLUGINDIR"/xcp";
+					args[0] = "xcp";
 					args[1] = xcp_opt;
 					args[2] = ((uri_t *)t->data)->url;
 					args[3] = target->path;

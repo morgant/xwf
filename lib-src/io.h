@@ -27,6 +27,7 @@ int io_can_exec (char *file);
 int io_can_write_to_parent (char *file);
 int io_system_nice (char *cmd, int n);
 #define io_system(cmd) io_system_nice(cmd,0);
+int io_find_in_path (char *cmd, char *path, size_t path_size);
 int io_system_var (char **cmd, int len);
 int io_is_directory (char *path);
 int io_is_file (char *file);

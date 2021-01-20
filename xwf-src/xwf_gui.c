@@ -1028,7 +1028,7 @@ cb_delete (GtkWidget *widget, GtkCTree *ctree)
 	argv = (char **) malloc (sizeof (char *) * (2 + num + 1));
 	if (!argv)
 		return;
-	argv[pos++] = PLUGINDIR"/xcp";
+	argv[pos++] = "xcp";
 	argv[pos++] = "-mt"; /* trash */
 
 	for (i = 0; i < num; i++) {

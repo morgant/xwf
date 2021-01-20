@@ -208,6 +208,41 @@ sig_child (int num)
 }
 
 /*
+ * find command in path
+ */
+int
+io_find_in_path (char *cmd, char *path, size_t path_size)
+{
+	int found = 0;
+	char *dup = strdup (getenv("PATH"));
+	char *s = dup;
+	char *p = NULL;
+
+	do {
+		char *fullpath;
+		size_t fullpath_len;
+
+		p = strchr (s, ':');
+		if (p != NULL)
+			p[0] = 0;
+
+		fullpath_len = strlen(s) + strlen(cmd) + 2;
+		fullpath = calloc(fullpath_len, sizeof(char));
+		snprintf(fullpath, fullpath_len, "%s/%s", s, cmd);
+
+		if (access(fullpath, X_OK) == 0) {
+			snprintf(path, path_size, "%s", fullpath);
+			found = 1;
+		}
+		free(fullpath);
+		s = p + 1;
+	} while (p != NULL && found == 0);
+	free (dup);
+
+	return found;
+}
+
+/*
  * exec a program with all the arguments
  */
 int
@@ -216,15 +251,17 @@ io_system_var (char **arg, int len)
 	pid_t pid;
 	int status, i, rc;
 	static void *oldsigfunc = NULL;
+	char path[PATH_MAX+1];
 
 	if ((arg == NULL) || (len == 0))
 		return -1;
-	if (access(arg[0], X_OK) != 0)
+
+	if (!io_find_in_path(arg[0], &path, PATH_MAX+1))
 		return -1;
 #ifdef DEBUG_IO
 	printf ("%s: io_system_var(arg=%s, .., len=%d)\n", __FILE__, *arg, len);
 #endif
-
+	
 	if ((pid = fork()) == -1) {
 		perror ("fork()");
 		return (-1);
@@ -239,7 +276,8 @@ io_system_var (char **arg, int len)
 #endif
 		if (!argv)
 			_exit (127);
-		for (i = 0; i < len; i++) {
+		argv[0] = path;
+		for (i = 1; i < len; i++) {
 			argv[i] = arg[i];
 		}
 		argv[len] = NULL;
