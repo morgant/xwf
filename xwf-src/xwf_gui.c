@@ -1582,14 +1582,14 @@ cb_duplicate (GtkWidget *item, GtkCTree *ctree)
 	GList *selection;
 	char nfile[PATH_MAX+1];
 	struct stat s;
-	char cmd[PATH_MAX*2];
-	int num;
+	int num, pos = 0;
+	int result;
+	char **argv;
 
 	gu_cursor_wait (GTK_WIDGET(ctree));
 
 	for (selection = GTK_CLIST(ctree)->selection;
 				selection; selection = selection->next) {
-
 		node = selection->data;
 		en = gtk_ctree_node_get_row_data (GTK_CTREE(ctree), node);
 		if (! (EN_IS_FILE(en) || EN_IS_DIR(en))) {
@@ -1602,8 +1602,17 @@ cb_duplicate (GtkWidget *item, GtkCTree *ctree)
 		while (stat(nfile, &s) != -1) {
 			sprintf (nfile, "%s-%d", en->path, num++);
 		}
-		sprintf (cmd, "%s/xcp '%s' '%s' &", PLUGINDIR, en->path, nfile);
-		system (cmd);
+
+		argv = (char **) malloc (sizeof (char *) * 4);
+		if (!argv)
+			return;
+		pos = 0;
+		argv[pos++] = "xcp";
+		argv[pos++] = en->path;
+		argv[pos++] = nfile;
+		argv[pos] = NULL;
+		result = io_system_var (argv, pos);
+		free(argv);
 #ifdef DEBUG_XWF
 		printf ("cb_duplicate() file=%s -> %s\n", en->path, nfile);
 #endif
