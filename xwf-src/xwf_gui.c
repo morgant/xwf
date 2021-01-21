@@ -1063,16 +1063,22 @@ void
 cb_find (GtkWidget *item, GtkWidget *ctree)
 {
 	GtkCTreeNode *node;
-	char cmd[PATH_MAX+1];
 	entry_t *en;
+	int pos = 0;
+	int result;
+	char **argv;
 
 	count_selection (GTK_CTREE(ctree), &node);
 	en = gtk_ctree_node_get_row_data(GTK_CTREE(ctree), node);
+	argv = (char **) malloc (sizeof (char *) * 3);
+	if (!argv)
+		return;
+	argv[pos++] = "xfi";
 	if (en && EN_IS_DIR(en))
-		sprintf (cmd, "%s/xfi '%s' &", PLUGINDIR, en->path);
-	else
-		sprintf (cmd, "%s/xfi &", PLUGINDIR);
-	io_system (cmd);
+		argv[pos++] = en->path;
+	argv[pos] = NULL;
+	result = io_system_var (argv, pos);
+	free(argv);
 }
 
 /*
