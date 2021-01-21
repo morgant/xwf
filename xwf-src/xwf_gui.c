@@ -1751,18 +1751,17 @@ cb_props (GtkWidget *item, GtkCTree *ctree)
 	GtkCTreeNode *node;
 	GList *selection;
 	cfg_t *win;
-	int num, i;
-	char **cmd;
+	int num, pos = 0;
+	char **argv;
 
 	if (!(num = count_selection (ctree, &node))) {
 		dlg_warning ("No item marked!");
 		return;
 	}
-	cmd = malloc (sizeof(char *) * (num + 2));
-	if (!cmd) /* todo */
+	argv = malloc (sizeof(char *) * (num + 2));
+	if (!argv) /* todo */
 		return;
-	cmd[0] = PLUGINDIR"/xat";
-	i = 1;
+	argv[pos++] = "xat";
 	selection = GTK_CLIST(ctree)->selection;
 	win = gtk_object_get_user_data (GTK_OBJECT(ctree));
 
@@ -1772,12 +1771,12 @@ cb_props (GtkWidget *item, GtkCTree *ctree)
 #ifdef DEBUG
 		printf ("cp_props() entry=%s\n", en->path);
 #endif
-		cmd[i++] = en->path;
+		argv[pos++] = en->path;
 		selection = selection->next;
 	}
-	cmd[i] = NULL;
-	io_system_var (cmd, num +1);
-	free (cmd);
+	argv[pos] = NULL;
+	io_system_var (argv, pos);
+	free (argv);
 }
 
 /*
