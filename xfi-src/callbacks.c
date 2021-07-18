@@ -490,6 +490,9 @@ on_lst_result_button_press_event       (GtkWidget       *widget,
 	GtkWidget *item;
 	char *str = NULL;
 	entry_t *entry;
+	int pos = 0;
+	int result;
+	char **argv;
 	char path[PATH_MAX*2], *exec;
 
 	if (event->button == 3) {
@@ -512,18 +515,29 @@ on_lst_result_button_press_event       (GtkWidget       *widget,
 		if (EN_IS_EXE(entry)) {
 			/* run the application
 			 */
-			sprintf (path, "'%s' &", entry->path);
-			io_system (path);
+			argv = (char **) malloc (sizeof (char *) * 2);
+			argv[pos++] = entry->path;
+			argv[pos] = NULL;
+			result = io_system_var (argv, pos);
+			free(argv);
 		} else if (EN_IS_DIR(entry)) {
-			sprintf (path, "xwf '%s' &", entry->path);
-			io_system (path);
+			argv = (char **) malloc (sizeof (char *) * 3);
+			argv[pos++] = "xwf";
+			argv[pos++] = entry->path;
+			argv[pos] = NULL;
+			result = io_system_var (argv, pos);
+			free(argv);
 		} else {
 			/* open file if we have an application registered
 			 */
 			exec = reg_app_by_file (sReg, entry->path);
 			if (exec) {
-				sprintf (path, "%s '%s'&", exec, entry->path);
-				io_system (path);
+				argv = (char **) malloc (sizeof (char *) * 3);
+				argv[pos++] = exec;
+				argv[pos++] = entry->path;
+				argv[pos] = NULL;
+				result = io_system_var (argv, pos);
+				free(argv);
 			}
 		}
 		entry_free (entry);
