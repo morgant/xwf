@@ -46,7 +46,7 @@
 #define VERSION "?.?.?"
 #endif
 #ifndef TRASH_DIR
-#define TRASH_DIR ".xap/.trash"
+#define TRASH_DIR ".xwf/.trash"
 #endif
 
 /*
