@@ -1241,6 +1241,9 @@ on_double_click (GtkWidget *ctree, GdkEventButton *event, void *menu)
 	GtkCTreeNode *node;
 	entry_t *en, *parent;
 	char cmd[(PATH_MAX+3)*2];
+	int pos = 0;
+	int result;
+	char **argv;
 	char *wd;
 	cfg_t *win;
 	reg_t *prg;
@@ -1310,12 +1313,20 @@ on_double_click (GtkWidget *ctree, GdkEventButton *event, void *menu)
 
 		wd = getcwd (NULL, PATH_MAX);
 		chdir (parent->path);
+
 		if (en->type & FT_EXE) /*io_can_exec (en->path))*/ {
-			if (event->state & GDK_MOD1_MASK)
-				sprintf (cmd, "%s -e \"%s\" &", TERMINAL, en->path);
-			else
-				sprintf (cmd, "\"%s\" &", en->path);
-			io_system (cmd);
+			argv = (char **) malloc (sizeof (char *) * 4);
+			if (event->state & GDK_MOD1_MASK) {
+				argv[pos++] = TERMINAL;
+				argv[pos++] = "-e";
+				argv[pos++] = en->path;
+				argv[pos] = NULL;
+			} else {
+				argv[pos++] = en->path;
+				argv[pos] = NULL;
+			}
+      result = io_system_var (argv, pos);
+      free(argv);
 		} else {
 			/* call open with dialog */
 #ifdef DEBUG_XWF
@@ -1324,12 +1335,18 @@ on_double_click (GtkWidget *ctree, GdkEventButton *event, void *menu)
 			win = gtk_object_get_user_data (GTK_OBJECT(ctree));
 			prg = reg_prog_by_file (win->reg, en->path);
 			if (prg) {
-				if (prg->arg)
+				if (prg->arg) {
 					sprintf (cmd, "\"%s\" %s \"%s\" &",
 								prg->app, prg->arg, en->path);
-				else
-					sprintf (cmd, "\"%s\" \"%s\" &", prg->app, en->path);
-				io_system (cmd);
+					io_system (cmd);
+				} else {
+					argv = (char **) malloc (sizeof (char *) * 4);
+					argv[pos++] = prg->app;
+					argv[pos++] = en->path;
+					argv[pos] = NULL;
+					result = io_system_var (argv, pos);
+					free(argv);
+				}
 			} else {
 				char *p;
 				p = mc_app_by_file (win->mreg, en->path);
