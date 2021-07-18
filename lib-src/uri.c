@@ -153,7 +153,7 @@ uri_clear_path (const char *org_path)
 /*
  * return uri type: file, http or ftp
  */
-int
+UriType
 uri_type (char *s)
 {
 	if (*s == '/')

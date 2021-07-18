@@ -24,7 +24,7 @@
 
 #define URI_MAX 1024
 
-enum {
+typedef enum {
 	URI_LOCAL,
 	URI_FILE,
 	URI_HTTP,
@@ -36,7 +36,7 @@ enum {
 typedef struct {
 	char *url;
 	short len;
-	short type;
+	UriType type;
 } uri_t;
 
 char *uri_clear_path (const char *);
