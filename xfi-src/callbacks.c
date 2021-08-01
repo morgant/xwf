@@ -421,8 +421,8 @@ on_pm_attribute_activate               (GtkMenuItem     *menuitem,
 {
 	GtkWidget *list;
 	GList *selection;
-	char **cmd;
-	int num, i;
+	char **argv;
+	int num, pos = 0;
 
 	list = lookup_widget (GTK_WIDGET(wTop), "lst_result");
 
@@ -435,17 +435,16 @@ on_pm_attribute_activate               (GtkMenuItem     *menuitem,
 	if (num < 1) {
 		return;
 	}
-	cmd = malloc (sizeof(char*) * (num + 2));
-	cmd[0] = PLUGINDIR"/xat";
-	i = 1;
+	argv = malloc (sizeof(char*) * (num + 2));
+	argv[pos++] = "xat";
 	selection = GTK_LIST(list)->selection;
 	while (selection) {
-		gtk_label_get (GTK_LABEL(GTK_BIN(selection->data)->child), &cmd[i++]);
+		gtk_label_get (GTK_LABEL(GTK_BIN(selection->data)->child), &argv[pos++]);
 		selection = selection->next;
 	}
-	cmd[i] = NULL;
-	io_system_var (cmd, num + 1);
-	free (cmd);
+	argv[pos] = NULL;
+	io_system_var (argv, pos);
+	free (argv);
 }
 
 
