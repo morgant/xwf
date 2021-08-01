@@ -390,12 +390,12 @@ on_pm_delete                           (GtkMenuItem     *menuitem,
 
 	list = lookup_widget (GTK_WIDGET(wTop), "lst_result");
 
-	num = 0;
-	selection = GTK_LIST(list)->selection;
-	while (selection) {
-		selection = selection->next;
-		num++;
+	num = count_selection(list);
+	if (num < 1)
+	{
+		return;
 	}
+
 	argv = malloc (sizeof(char*) * (num + 3));
 	argv[pos++] = "xcp";
 	argv[pos++] = "-mt";
@@ -425,15 +425,11 @@ on_pm_attribute_activate               (GtkMenuItem     *menuitem,
 
 	list = lookup_widget (GTK_WIDGET(wTop), "lst_result");
 
-	num = 0;
-	selection = GTK_LIST(list)->selection;
-	while (selection) {
-		selection = selection->next;
-		num++;
-	}
+	num = count_selection(list);
 	if (num < 1) {
 		return;
 	}
+
 	argv = malloc (sizeof(char*) * (num + 2));
 	argv[pos++] = "xat";
 	selection = GTK_LIST(list)->selection;
@@ -602,6 +598,24 @@ on_wdirsel_realize                     (GtkWidget       *widget,
 {
 	gtk_file_selection_hide_fileop_buttons (GTK_FILE_SELECTION(widget));
 	gtk_widget_hide (GTK_WIDGET(GTK_FILE_SELECTION(widget)->file_list)->parent);
+}
+
+/*
+ * count the number of selected items in a list
+ */
+int
+count_selection (GtkWidget *list)
+{
+	int num = 0;
+	GList *selection;
+
+	selection = GTK_LIST(list)->selection;
+	while (selection) {
+		selection = selection->next;
+		num++;
+	}
+
+	return num;
 }
 
 /*
