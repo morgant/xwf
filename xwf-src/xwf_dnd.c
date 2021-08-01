@@ -234,10 +234,10 @@ on_drag_data (GtkWidget *ctree, GdkDragContext *context, gint x, gint y,
 	entry_t *target;
 	GtkCTreeNode *node;
 	uri_t *u;
-	int action, i;
+	int action, i, pos = 0;
 	unsigned long nitems = 0;
 	char msg[DLG_MAX], *string = NULL;
-	char **args, *xcp_opt = NULL;
+	char **argv, *xcp_opt = NULL;
 
 #ifdef DEBUG_DND
 	printf ("on_drag_data() data received, info=%d a=%d as=%d sa=%d row=%d\n",
@@ -335,28 +335,30 @@ on_drag_data (GtkWidget *ctree, GdkDragContext *context, gint x, gint y,
 
 	switch (info) {
 		case TARGET_XWF_LIST:
-			args = g_malloc (sizeof(char*) * (nitems + 1 + 2));
+			argv = g_malloc (sizeof(char*) * (nitems + 1 + 2 + 1));
 			if (EN_IS_EXE(target)) {
-				args[0] = target->path;
+				argv[pos++] = target->path;
 				for (i = 0; i < nitems; i++) {
-					args[i+1] = ((uri_t *)(g_list_nth (list, i)->data))->url;
+					argv[pos++] = ((uri_t *)(g_list_nth (list, i)->data))->url;
 				}
-				args[i+1] = target->path;
-				if (io_system_var (args, nitems+1) != 0)
+				argv[pos++] = target->path;
+        argv[pos] = NULL;
+				if (io_system_var (argv, pos) != 0)
 					perror (target->path);
 				uri_free_list (list);
 			} else {
-				args[0] = "xcp";
-				args[1] = xcp_opt;
+				argv[pos++] = "xcp";
+				argv[pos++] = xcp_opt;
 				for (i = 0; i < nitems; i++) {
-					args[i+2] = ((uri_t *)(g_list_nth (list, i)->data))->url;
+					argv[pos++] = ((uri_t *)(g_list_nth (list, i)->data))->url;
 				}
-				args[i+2] = target->path;
-				if (io_system_var (args, nitems+3) != 0)
+				argv[pos++] = target->path;
+        argv[pos] = NULL;
+				if (io_system_var (argv, pos) != 0)
 					perror ("xcp");
 				uri_free_list (list);
 			}
-			g_free (args);
+			g_free (argv);
 			break;
 
 		case TARGET_PLAIN:
@@ -380,14 +382,15 @@ on_drag_data (GtkWidget *ctree, GdkDragContext *context, gint x, gint y,
 						break;
 				} else if (u->type == URI_LOCAL) {
 					/* printf (" %s -> %s\n", u->url, en->path); */
-					args = g_malloc (sizeof(char*) * (1 + 1 + 2));
-					args[0] = "xcp";
-					args[1] = xcp_opt;
-					args[2] = ((uri_t *)t->data)->url;
-					args[3] = target->path;
-					if (io_system_var (args, 1+3) != 0)
+					argv = g_malloc (sizeof(char*) * (1 + 1 + 2 + 1));
+					argv[pos++] = "xcp";
+					argv[pos++] = xcp_opt;
+					argv[pos++] = ((uri_t *)t->data)->url;
+					argv[pos++] = target->path;
+          argv[pos] = NULL;
+					if (io_system_var (argv, pos) != 0)
 						perror ("xcp");
-					g_free (args);
+					g_free (argv);
 				} else {
 					fprintf (stderr, "type not supported.. (%d)\n", u->type);
 				}
