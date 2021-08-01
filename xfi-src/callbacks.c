@@ -385,8 +385,8 @@ on_pm_delete                           (GtkMenuItem     *menuitem,
 {
 	GtkWidget *list;
 	GList *selection, *remove;
-	char **cmd;
-	int num, i;
+	char **argv;
+	int num, pos = 0;
 
 	list = lookup_widget (GTK_WIDGET(wTop), "lst_result");
 
@@ -396,18 +396,17 @@ on_pm_delete                           (GtkMenuItem     *menuitem,
 		selection = selection->next;
 		num++;
 	}
-	cmd = malloc (sizeof(char*) * (num + 3));
-	cmd[0] = PLUGINDIR"/xcp";
-	cmd[1] = "-mt";
-	i = 2;
+	argv = malloc (sizeof(char*) * (num + 3));
+	argv[pos++] = "xcp";
+	argv[pos++] = "-mt";
 	selection = GTK_LIST(list)->selection;
 	while (selection) {
-		gtk_label_get (GTK_LABEL(GTK_BIN(selection->data)->child), &cmd[i++]);
+		gtk_label_get (GTK_LABEL(GTK_BIN(selection->data)->child), &argv[pos++]);
 		selection = selection->next;
 	}
-	cmd[i] = NULL;
-	io_system_var (cmd, num + 2);
-	free (cmd);
+	argv[pos] = NULL;
+	io_system_var (argv, pos);
+	free (argv);
 	remove = g_list_copy (GTK_LIST(list)->selection);
 	gtk_list_remove_items (GTK_LIST(list), remove);
 	g_list_free (remove);
