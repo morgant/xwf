@@ -338,26 +338,24 @@ on_drag_data (GtkWidget *ctree, GdkDragContext *context, gint x, gint y,
 			argv = g_malloc (sizeof(char*) * (nitems + 1 + 2 + 1));
 			if (EN_IS_EXE(target)) {
 				argv[pos++] = target->path;
-				for (i = 0; i < nitems; i++) {
-					argv[pos++] = ((uri_t *)(g_list_nth (list, i)->data))->url;
-				}
-				argv[pos++] = target->path;
-        argv[pos] = NULL;
-				if (io_system_var (argv, pos) != 0)
-					perror (target->path);
-				uri_free_list (list);
 			} else {
 				argv[pos++] = "xcp";
 				argv[pos++] = xcp_opt;
-				for (i = 0; i < nitems; i++) {
-					argv[pos++] = ((uri_t *)(g_list_nth (list, i)->data))->url;
-				}
-				argv[pos++] = target->path;
-        argv[pos] = NULL;
-				if (io_system_var (argv, pos) != 0)
-					perror ("xcp");
-				uri_free_list (list);
 			}
+			for (i = 0; i < nitems; i++) {
+				argv[pos++] = ((uri_t *)(g_list_nth (list, i)->data))->url;
+			}
+			argv[pos++] = target->path;
+			argv[pos] = NULL;
+
+			if (io_system_var (argv, pos) != 0) {
+				if (EN_IS_EXE(target)) {
+					perror (target->path);
+				} else {
+					perror ("xcp");
+				}
+			}
+			uri_free_list (list);
 			g_free (argv);
 			break;
 
