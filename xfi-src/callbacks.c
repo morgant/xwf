@@ -456,8 +456,8 @@ on_pm_opendir_activate                 (GtkMenuItem     *menuitem,
 	GtkWidget *list;
 	char *file;
 	GList *selection;
-	char *cmd[2], *p;
-	int len;
+	char *argv[2], *p;
+	int len, pos = 0;
 
 	list = lookup_widget (GTK_WIDGET(wTop), "lst_result");
 	selection = GTK_LIST(list)->selection;
@@ -471,9 +471,9 @@ on_pm_opendir_activate                 (GtkMenuItem     *menuitem,
 				*p = '\0';
 			}
 		}
-		cmd[0] = INSTDIR"/bin/xwf";
-		cmd[1] = file;
-		io_system_var (cmd, 2);
+		argv[pos++] = "xwf";
+		argv[pos++] = file;
+		io_system_var (argv, pos);
 	}
 }
 
