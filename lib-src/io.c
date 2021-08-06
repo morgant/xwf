@@ -27,6 +27,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/resource.h>
 #include "config.h"
 #ifdef HAVE_LIMITS_H
 #include <limits.h>
@@ -155,8 +156,8 @@ io_system_nice (char *cmd, int niceval)
 	if (pid == 0) {
 		/* child */
 		char *argv[4];
-		if (nice)
-			nice (niceval);
+		if (setpriority (PRIO_PROCESS, 0, niceval) == -1)
+			fprintf (stderr, "%s: Warning: setpriority() failed!\n", __FILE__);
 		argv[0] = SHELL;
 		argv[1] = "-c";
 		argv[2] = cmd;
