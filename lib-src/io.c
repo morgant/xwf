@@ -218,25 +218,32 @@ io_find_in_path (char *cmd, char *path, size_t path_size)
 	char *s = dup;
 	char *p = NULL;
 
-	do {
-		char *fullpath;
-		size_t fullpath_len;
+	// check cwd or cmd path first
+	if (access(cmd, X_OK) == 0) {
+		snprintf(path, path_size, "%s", cmd);
+		found = 1;
+	// otherwise check each path entry
+	} else {
+		do {
+			char *fullpath;
+			size_t fullpath_len;
 
-		p = strchr (s, ':');
-		if (p != NULL)
-			p[0] = 0;
+			p = strchr (s, ':');
+			if (p != NULL)
+				p[0] = 0;
 
-		fullpath_len = strlen(s) + strlen(cmd) + 2;
-		fullpath = calloc(fullpath_len, sizeof(char));
-		snprintf(fullpath, fullpath_len, "%s/%s", s, cmd);
+			fullpath_len = strlen(s) + strlen(cmd) + 2;
+			fullpath = calloc(fullpath_len, sizeof(char));
+			snprintf(fullpath, fullpath_len, "%s/%s", s, cmd);
 
-		if (access(fullpath, X_OK) == 0) {
-			snprintf(path, path_size, "%s", fullpath);
-			found = 1;
-		}
-		free(fullpath);
-		s = p + 1;
-	} while (p != NULL && found == 0);
+			if (access(fullpath, X_OK) == 0) {
+				snprintf(path, path_size, "%s", fullpath);
+				found = 1;
+			}
+			free(fullpath);
+			s = p + 1;
+		} while (p != NULL && found == 0);
+  }
 	free (dup);
 
 	return found;
@@ -256,12 +263,13 @@ io_system_var (char **arg, int len)
 	if ((arg == NULL) || (len == 0))
 		return -1;
 
-	if (!io_find_in_path(arg[0], &path, PATH_MAX+1))
-		return -1;
 #ifdef DEBUG_IO
 	printf ("%s: io_system_var(arg=%s, .., len=%d)\n", __FILE__, *arg, len);
 #endif
-	
+
+	if (!io_find_in_path(arg[0], &path, PATH_MAX+1))
+		return -1;
+
 	if ((pid = fork()) == -1) {
 		perror ("fork()");
 		return (-1);
