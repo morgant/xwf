@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/resource.h>
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -47,6 +48,9 @@
 #endif
 #ifndef TRASH_DIR
 #define TRASH_DIR ".xwf/.trash"
+#endif
+#ifndef XCP_NICE
+#define XCP_NICE 10
 #endif
 
 /*
@@ -92,8 +96,10 @@ main (int argc, char *argv[])
 	bindtextdomain ("xcp", LOCALEDIR);
 	textdomain ("xcp");
 
-	if (nice (12) != 0)
-		printf ("Warning: nice() failed!\n");
+	// be nice
+	if (setpriority (PRIO_PROCESS, 0, XCP_NICE) == -1)
+		fprintf (stderr, "%s: Warning: setpriority() failed!\n", __FILE__);
+
 	sprintf (path, "%s/%s", getenv("HOME"), XWF_PATH);
 	sprintf (rc, "%s/%s", path, XCP_RC);
 	gui_init (&argc, &argv, rc);
