@@ -754,6 +754,7 @@ cb_empty_trash (GtkWidget *widget, GtkCTree *ctree)
 	struct dirent *de;
 	char complete[PATH_MAX+1];
 	entry_t check;
+	int ask = TRUE;
 
 	win = gtk_object_get_user_data (GTK_OBJECT(ctree));
 	check.path = win->trash;
@@ -769,6 +770,12 @@ cb_empty_trash (GtkWidget *widget, GtkCTree *ctree)
 	dir = opendir (win->trash);
 	if (!dir)
 		return;
+
+	if (ask) {
+		if (dlg_ask(_("Empty trash?")) == DLG_RC_CANCEL)
+			return;
+	}
+
 	gu_cursor_wait (GTK_WIDGET(ctree));
 	while ((de = readdir(dir)) != NULL) {
 		if (io_is_current (de->d_name))
