@@ -1282,7 +1282,8 @@ on_double_click (GtkWidget *ctree, GdkEventButton *event, void *menu)
 		node = gtk_ctree_node_nth (GTK_CTREE(ctree), row);
 		en = gtk_ctree_node_get_row_data (GTK_CTREE(ctree), node);
 		if (EN_IS_DIR(en)) {
-			/* Alt button is pressed it's the same as _go_to()..
+			/* If Ctrl or Alt button is pressed it's the same as _go_to()..
+			 * Also if user pressed RETURN
 			 */
 			if ( (event->state & GDK_MOD1_MASK) ||
 					( event->state & GDK_CONTROL_MASK) ||
@@ -1958,13 +1959,14 @@ new_top (char *path, char *xwf, char *trash, GList *reg, mc_mime_reg_t *mreg,
 		{ _("New Folder..."),cb_new_subdir,	0, GDK_n, GDK_SHIFT_MASK|GDK_CONTROL_MASK},
 		{ _("New File..."),	cb_new_file,	0, GDK_k, GDK_CONTROL_MASK},
 		{ NULL,				NULL,			0},
+		{ _("Make Alias..."),	cb_new_link,	0, GDK_m, GDK_CONTROL_MASK},
 		{ _("Rename Folder..."),	cb_rename,		0, GDK_r, GDK_CONTROL_MASK},
 		{ _("Move to Trash..."),	cb_delete,		0, GDK_BackSpace, GDK_CONTROL_MASK},
 		{ NULL,				NULL,			0},
 		{ _("Open Trash"),			cb_open_trash,WINCFG, GDK_t, GDK_CONTROL_MASK},
 		{ _("Empty Trash..."),		cb_empty_trash,	0, GDK_BackSpace, GDK_SHIFT_MASK|GDK_CONTROL_MASK},
 		{ NULL,				NULL,			0},
-		{ _("Go to marked"),cb_go_to,		0, GDK_g, GDK_MOD1_MASK},
+		{ _("Go to Folder"),cb_go_to,		0, GDK_g, GDK_SHIFT_MASK|GDK_CONTROL_MASK},
 		{ _("Go up"),		cb_go_up,		0, GDK_u, GDK_MOD1_MASK},
 		{ _("Unselect"),	cb_unselect,0,GDK_a, GDK_SHIFT_MASK|GDK_MOD1_MASK},
 		{ _("Find .."),		cb_find,		0, GDK_f, GDK_MOD1_MASK},
@@ -1981,8 +1983,8 @@ new_top (char *path, char *xwf, char *trash, GList *reg, mc_mime_reg_t *mreg,
 		{ NULL,					NULL,			0},
 		{ _("Open in New Window"),		cb_new_window,	0, GDK_n, GDK_CONTROL_MASK},
 		{ NULL,					NULL,			0},
-		{ _("Open with .."),	cb_open_with,	0, GDK_o, GDK_MOD1_MASK},
-		{ _("Make Alias .."),	cb_new_link,	0, GDK_m, GDK_MOD1_MASK},
+		{ _("Open with..."),	cb_open_with,	0, GDK_o, GDK_CONTROL_MASK},
+		{ _("Make Alias..."),	cb_new_link,	0, GDK_m, GDK_CONTROL_MASK},
 		{ NULL,					NULL,			0},
 		{ _("Rename File..."),		cb_rename,		0, GDK_r, GDK_CONTROL_MASK},
 		{ _("Move to Trash..."),		cb_delete,		0, GDK_BackSpace, GDK_CONTROL_MASK},
@@ -1991,6 +1993,7 @@ new_top (char *path, char *xwf, char *trash, GList *reg, mc_mime_reg_t *mreg,
 		{ _("Open Trash"),			cb_open_trash,WINCFG, GDK_t, GDK_CONTROL_MASK},
 		{ _("Empty Trash..."),		cb_empty_trash,	0, GDK_BackSpace, GDK_SHIFT_MASK|GDK_CONTROL_MASK},
 		{ NULL,					NULL,			0},
+		{ _("Go to Folder..."),cb_go_to,		0, GDK_g, GDK_SHIFT_MASK|GDK_CONTROL_MASK},
 		{ _("Go up"),			cb_go_up,		0},
 		{ _("Go home"),			cb_go_home,		0, GDK_h, GDK_MOD1_MASK},
 		{ _("Unselect"),		cb_unselect,	0},
@@ -2013,6 +2016,7 @@ new_top (char *path, char *xwf, char *trash, GList *reg, mc_mime_reg_t *mreg,
 		{ _("Open Trash"),			cb_open_trash,WINCFG, GDK_t, GDK_CONTROL_MASK},
 		{ _("Empty Trash..."),		cb_empty_trash,	0, GDK_BackSpace, GDK_SHIFT_MASK|GDK_CONTROL_MASK},
 		{ NULL,					NULL,			0},
+		{ _("Go to Folder..."),cb_go_to,		0, GDK_g, GDK_SHIFT_MASK|GDK_CONTROL_MASK},
 		{ _("Go up"),				cb_go_up,	0},
 		{ _("Go home"),			cb_go_home,		0},
 		{ _("Unselect all"),		cb_unselect,0},
