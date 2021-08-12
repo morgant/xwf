@@ -1868,6 +1868,19 @@ cb_register (GtkWidget *item, GtkWidget *ctree)
 }
 
 /*
+ * called when user quits via contextual menu or keyboard shortcut
+ */
+void
+cb_quit (GtkWidget *top, void *data)
+{
+#ifdef DEBUG
+	printf ("cb_quit()\n");
+#endif
+	if (dlg_ask(_("Are you sure you want to quit Xwf?")) == DLG_RC_OK)
+		gtk_main_quit ();
+}
+
+/*
  */
 void
 on_destroy (GtkWidget *top, cfg_t *win)
@@ -1897,7 +1910,7 @@ on_delete (GtkWidget *w, GdkEvent *event, gpointer data)
 	printf ("on_delete()\n");
 #endif
 	if (top_length () == 1) {
-		if (dlg_ask(_("Do you want to exit the Xwf program?")) == DLG_RC_OK)
+		if (dlg_ask(_("Are you sure you want to quit Xwf?")) == DLG_RC_OK)
 			return (FALSE);
 		return (TRUE);
 	}
@@ -1915,7 +1928,7 @@ cb_destroy (GtkWidget *top, void *data)
 	printf ("cb_destroy()\n");
 #endif
 	if (top_length () == 1) {
-		if (dlg_ask(_("Do you want to exit the Xwf program?")) == DLG_RC_OK)
+		if (dlg_ask(_("Are you sure you want to quit Xwf?")) == DLG_RC_OK)
 			gtk_widget_destroy ((GtkWidget *)data);
 		return;
 	}
@@ -1979,7 +1992,7 @@ new_top (char *path, char *xwf, char *trash, GList *reg, mc_mime_reg_t *mreg,
 		{ _("Run Command..."),	cb_exec, 		WINCFG, GDK_r, GDK_SHIFT_MASK|GDK_CONTROL_MASK},
 		{ NULL,				NULL,			0},
 		{ _("About..."),			cb_about,	0},
-		{ _("Quit"),gtk_main_quit, 	0, GDK_q, GDK_CONTROL_MASK},
+		{ _("Quit"),cb_quit, 	0, GDK_q, GDK_CONTROL_MASK},
 	};
 	#define LAST_DIR_MENU_ENTRY (sizeof(dir_mlist)/sizeof(menu_entry))
 
@@ -2009,7 +2022,7 @@ new_top (char *path, char *xwf, char *trash, GList *reg, mc_mime_reg_t *mreg,
 		{ _("Run Command..."),		cb_exec, 		WINCFG, GDK_r, GDK_SHIFT_MASK|GDK_CONTROL_MASK},
 		{ NULL,					NULL,			0},
 		{ _("About..."),			cb_about,	0},
-		{ _("Quit"),	gtk_main_quit,	0, GDK_q, GDK_CONTROL_MASK},
+		{ _("Quit"),	cb_quit,	0, GDK_q, GDK_CONTROL_MASK},
 	};
 	#define LAST_FILE_MENU_ENTRY (sizeof(file_mlist)/sizeof(menu_entry))
 
@@ -2032,7 +2045,7 @@ new_top (char *path, char *xwf, char *trash, GList *reg, mc_mime_reg_t *mreg,
 		{ _("Run Command..."),			cb_exec, 	WINCFG, GDK_r, GDK_SHIFT_MASK|GDK_CONTROL_MASK},
 		{ NULL,					NULL,			0},
 		{ _("About..."),			cb_about,	0},
-		{ _("Quit"),		gtk_main_quit,	0, GDK_q, GDK_CONTROL_MASK},
+		{ _("Quit"),		cb_quit,	0, GDK_q, GDK_CONTROL_MASK},
 	};
 	#define LAST_MIXED_MENU_ENTRY (sizeof(mixed_mlist)/sizeof(menu_entry))
 
