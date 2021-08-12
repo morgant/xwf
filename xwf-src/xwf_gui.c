@@ -1093,9 +1093,9 @@ cb_find (GtkWidget *item, GtkWidget *ctree)
 void
 cb_about (GtkWidget *item, GtkWidget *ctree)
 {
-	dlg_info("This is xwf version "VERSION
-				"\n(c) by Rasca\nPublished under GNU GPL"
-				"\nhttp://home.pages.de/~rasca/xap/");
+	dlg_info("Xwf v"VERSION
+				"\n(c) 1999-2000 Rasca\n(c) 2021 Morgan Aldridge\nPublished under GNU GPL"
+				"\nhttps://github.com/morgant/xwf/");
 }
 
 /*
