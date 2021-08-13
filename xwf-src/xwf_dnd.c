@@ -531,6 +531,11 @@ on_drag_data_delete (GtkWidget *widget, GdkDragContext *context, gpointer *data)
 			(int)win->dnd_data);
 #endif
 	g_free (win->dnd_data);
+	/* under GTK+ 2.x we seem to get double drag_data_delete signals when
+	 * completing a move (but not a copy), so make sure that we clear the
+	 * pointer so it doesn't try to double-free
+	 */
+	win->dnd_data = NULL;
 }
 
 
