@@ -132,7 +132,6 @@ on_btn_find_clicked                       (GtkButton       *button,
 	char line[PATH_MAX];
 	int len;
 	int num;
-	gfloat pos;
 
 	gState = OK;
 
@@ -217,7 +216,6 @@ on_btn_find_clicked                       (GtkButton       *button,
 		gtk_main_iteration();
 
 	num = 0;
-	pos = 0;
 	while (fgets (line, PATH_MAX, pipe) != NULL) {
 		len = strlen (line);
 		if (len > 0) {
@@ -227,8 +225,6 @@ on_btn_find_clicked                       (GtkButton       *button,
 			gtk_container_add (GTK_CONTAINER(list), item);
 			sprintf (status, "%d items", ++num);
 			gtk_statusbar_push (GTK_STATUSBAR(sbar), 1, status);
-			pos += 0.1;
-			if (pos > 1) pos = 0;
 			gtk_progress_bar_pulse(GTK_PROGRESS_BAR(pbar));
 		}
 		while (gtk_events_pending()) {
