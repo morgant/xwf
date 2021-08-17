@@ -177,6 +177,13 @@ on_btn_find_clicked                       (GtkButton       *button,
 		return;
 	val_root = gtk_entry_get_text (GTK_ENTRY(root));
 
+	cursor_wait(gtk_widget_get_toplevel(list));
+	sprintf (status, "Preparing...");
+	gtk_statusbar_push (GTK_STATUSBAR(sbar), 1, status);
+
+	while (gtk_events_pending())
+		gtk_main_iteration();
+
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(opt_this_fs)))
 		strcat (opt, " -xdev");
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(opt_follow)))
@@ -187,28 +194,27 @@ on_btn_find_clicked                       (GtkButton       *button,
 		strcat (opt, " -nogroup");
 
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(radio_file)))
-		sprintf (cmd,"find '%s' %s -name '%s' -a -type f -printf \"%%p\\n\\c\"",
+		sprintf (cmd,"find '%s' %s -name '%s' -a -type f",
 				val_root, opt, val_pattern);
 	else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(radio_dir)))
-		sprintf (cmd,"find '%s' %s -name '%s' -a -type d -printf \"%%p\\n\\c\"",
+		sprintf (cmd,"find '%s' %s -name '%s' -a -type d",
 				val_root, opt, val_pattern);
 	else /* file and directory */
-		sprintf (cmd, "find '%s' %s -name '%s' -printf \"%%p\\n\\c\"",
+		sprintf (cmd, "find '%s' %s -name '%s'",
 				val_root, opt, val_pattern);
 	pipe = popen (cmd, "r");
 	if (!pipe)
 		return;
 
-	cursor_wait(gtk_widget_get_toplevel(list));
-	sprintf (status, "Preparing ..");
+	gtk_list_clear_items (GTK_LIST(list), 0, -1);
+
+	sprintf (status, "Searching...");
 	gtk_statusbar_push (GTK_STATUSBAR(sbar), 1, status);
+
+	gtk_progress_bar_pulse(GTK_PROGRESS_BAR(pbar));
 
 	while (gtk_events_pending())
 		gtk_main_iteration();
-
-	gtk_list_clear_items (GTK_LIST(list), 0, -1);
-
-	gtk_progress_bar_set_activity_step (GTK_PROGRESS_BAR(pbar), 1);
 
 	num = 0;
 	pos = 0;
@@ -223,12 +229,12 @@ on_btn_find_clicked                       (GtkButton       *button,
 			gtk_statusbar_push (GTK_STATUSBAR(sbar), 1, status);
 			pos += 0.1;
 			if (pos > 1) pos = 0;
-			gtk_progress_bar_update (GTK_PROGRESS_BAR(pbar), pos);
+			gtk_progress_bar_pulse(GTK_PROGRESS_BAR(pbar));
 		}
 		while (gtk_events_pending()) {
 			gtk_main_iteration();
 			if (!gState) {
-				sprintf (status, "Search canceled .. please wait");
+				sprintf (status, "Search canceled... please wait");
 				gtk_statusbar_push (GTK_STATUSBAR(sbar), 1, status);
 				while (gtk_events_pending())
 					gtk_main_iteration();

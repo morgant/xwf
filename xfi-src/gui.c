@@ -533,8 +533,6 @@ create_xfi (void)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (progressbar);
   gtk_box_pack_start (GTK_BOX (hbox), progressbar, FALSE, FALSE, 0);
-  gtk_progress_set_activity_mode (GTK_PROGRESS (progressbar), TRUE);
-  gtk_progress_set_show_text (GTK_PROGRESS (progressbar), TRUE);
 
   gtk_signal_connect (GTK_OBJECT (xfi), "delete_event",
                       GTK_SIGNAL_FUNC (gtk_main_quit),
