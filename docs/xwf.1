@@ -1,8 +1,9 @@
 .\" Written by Rasca Gmelch, Berlin 1999 - 2000
+.\" Updated by Morgan Aldridge, 2021
 .\" Published under the GNU GPL V2
-.TH XWF 1 "Jul. 2000" "GNU" "Version 0.9"
+.TH XWF 1 "Aug. 2021" "GNU" "Version 0.10"
 .SH NAME
-xwf - gtk+ based filemanager for X Window
+xwf - gtk+ based filemanager for X Windows
 .SH SYNOPSIS
 .BI "xwf [-v] ["<dir> "] [-g "<x-geometry> "]
 .SH OPTIONS
@@ -51,72 +52,65 @@ If you DND a URL, e.g. from mozilla a download program is
 called and you can watch in a small dialog window the transfer.
 .SH KEYBOARD SHORT CUTS
 .TP
-Alt+A
+Ctrl+A
 Select all items in the focused directory.
 .TP
-Alt+Shift+A
+Ctrl+Shift+A
 Unselect all items.
 .TP
-Ctrl+A
-Open the 'About' dialog. This gives you the version
-information.
-.TP
-Alt+O
+Ctrl+O
 Open marked files or open direcotry in a new window.
 .TP
-Alt+D
+Ctrl+D
 Duplicate the marked file(s) and directories.
 .TP
-Alt+Shift+D
+Ctrl+Shift+D
 Hide/show hidden files (dotfiles).
 .TP
-Alt+E
+Ctrl+Shift+BACKSPACE
 Empty the trash directory.
 .TP
-Alt+F
+Ctrl+F
 Find files in the current directory.
 .TP
-Alt+G
+Ctrl+Shift+G
 Go to selected directory or ask the user if no directory entries
 are selected.
 .TP
-Alt+H
+Ctrl+Shift+H
 Go to home directory.
 .TP
-Alt+I
+Ctrl+I
 Properties / information of selected items.
 .TP
-Alt+J
+Ctrl+J
 Register an application for a file name suffix.
 .TP
-Alt+K
+Ctrl+K
 Create a new file.
 .TP
-Alt+N
+Ctrl+Shift+N
 Create a new directory.
 .TP
-Alt+M
+Ctrl+M
 Make a new alias (soft link).
 .TP
-Alt+R
+Ctrl+R
 Rename selected file / directory.
 .TP
-Alt+T
+Ctrl+T
 Open trash directory in a new window.
-.TP
-Alt+U
-Go one directory level up.
 .TP
 BACKSPACE
 Go one directory level up.
 .TP
-Alt+W
+Ctrl+W
 Close current window.
 .TP
-Alt+Q
+Ctrl+Q
 Quit the program.
 .TP
-Ctrl+X
+Ctrl+BACKSPACE
 Delete selected items, same as pressing the Delete key.
 .TP
 Alt+BACKSPACE
@@ -137,9 +131,11 @@ xwf's user icon directory
 .SH SEE ALSO
 .B X(1)
 .SH AUTHOR
-(c) Rasca, Berlin
+(c) 1999-2000 Rasca Gmelch, Berlin
 .br
-http://home.pages.de/~rasca/
+(c) 2021 Morgan Aldridge
+.br
+https://github.com/morgant/xwf
 .br
 .I xwf
 is published under the GNU General Public License
