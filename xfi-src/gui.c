@@ -372,6 +372,19 @@ create_xfi (void)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 
+  radio_all = gtk_radio_button_new_with_label (type_group, "");
+  radio_all_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (radio_all)->child),
+                                   "_All");
+  gtk_widget_add_accelerator (radio_all, "clicked", accel_group,
+                              radio_all_key, GDK_MOD1_MASK, 0);
+  type_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_all));
+  gtk_widget_ref (radio_all);
+  gtk_object_set_data_full (GTK_OBJECT (xfi), "radio_all", radio_all,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (radio_all);
+  gtk_box_pack_start (GTK_BOX (tbox), radio_all, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_all), TRUE);
+
   radio_file = gtk_radio_button_new_with_label (type_group, "");
   radio_file_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (radio_file)->child),
                                    "_Plain File");
@@ -383,7 +396,6 @@ create_xfi (void)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (radio_file);
   gtk_box_pack_start (GTK_BOX (tbox), radio_file, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_file), TRUE);
 
   radio_dir = gtk_radio_button_new_with_label (type_group, "");
   radio_dir_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (radio_dir)->child),
@@ -396,18 +408,6 @@ create_xfi (void)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (radio_dir);
   gtk_box_pack_start (GTK_BOX (tbox), radio_dir, FALSE, FALSE, 0);
-
-  radio_all = gtk_radio_button_new_with_label (type_group, "");
-  radio_all_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (radio_all)->child),
-                                   "A_ll");
-  gtk_widget_add_accelerator (radio_all, "clicked", accel_group,
-                              radio_all_key, GDK_MOD1_MASK, 0);
-  type_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_all));
-  gtk_widget_ref (radio_all);
-  gtk_object_set_data_full (GTK_OBJECT (xfi), "radio_all", radio_all,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (radio_all);
-  gtk_box_pack_start (GTK_BOX (tbox), radio_all, FALSE, FALSE, 0);
 
   nlabel_find = gtk_label_new ("Find");
   gtk_widget_ref (nlabel_find);
