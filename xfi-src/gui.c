@@ -519,19 +519,19 @@ create_xfi (void)
   gtk_widget_show (hbox);
   gtk_box_pack_start (GTK_BOX (mainbox), hbox, FALSE, TRUE, 0);
 
-  statusbar = gtk_statusbar_new ();
-  gtk_widget_ref (statusbar);
-  gtk_object_set_data_full (GTK_OBJECT (xfi), "statusbar", statusbar,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (statusbar);
-  gtk_box_pack_start (GTK_BOX (hbox), statusbar, TRUE, TRUE, 0);
-
   progressbar = gtk_progress_bar_new ();
   gtk_widget_ref (progressbar);
   gtk_object_set_data_full (GTK_OBJECT (xfi), "progressbar", progressbar,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (progressbar);
   gtk_box_pack_start (GTK_BOX (hbox), progressbar, FALSE, FALSE, 0);
+
+  statusbar = gtk_statusbar_new ();
+  gtk_widget_ref (statusbar);
+  gtk_object_set_data_full (GTK_OBJECT (xfi), "statusbar", statusbar,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (statusbar);
+  gtk_box_pack_start (GTK_BOX (hbox), statusbar, TRUE, TRUE, 0);
 
   gtk_signal_connect (GTK_OBJECT (xfi), "delete_event",
                       GTK_SIGNAL_FUNC (gtk_main_quit),
