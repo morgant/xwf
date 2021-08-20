@@ -511,7 +511,7 @@ create_xfi (void)
   GTK_WIDGET_SET_FLAGS (lst_result, GTK_CAN_FOCUS);
   gtk_tooltips_set_tip (tooltips, lst_result, "Search result", NULL);
   gtk_widget_set_events (lst_result, GDK_KEY_PRESS_MASK);
-  gtk_list_set_selection_mode (GTK_LIST (lst_result), GTK_SELECTION_EXTENDED);
+  gtk_list_set_selection_mode (GTK_LIST (lst_result), GTK_SELECTION_SINGLE);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_widget_ref (hbox);
@@ -718,7 +718,6 @@ GtkWidget*
 create_pmenu (void)
 {
   GtkWidget *pmenu;
-  GtkWidget *separator2;
   GtkWidget *pm_opendir;
   GtkWidget *separator4;
   GtkWidget *pm_delete;
@@ -727,15 +726,7 @@ create_pmenu (void)
   pmenu = gtk_menu_new ();
   gtk_object_set_data (GTK_OBJECT (pmenu), "pmenu", pmenu);
 
-  separator2 = gtk_menu_item_new ();
-  gtk_widget_ref (separator2);
-  gtk_object_set_data_full (GTK_OBJECT (pmenu), "separator2", separator2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (separator2);
-  gtk_container_add (GTK_CONTAINER (pmenu), separator2);
-  gtk_widget_set_sensitive (separator2, FALSE);
-
-  pm_opendir = gtk_menu_item_new_with_label ("Open directory");
+  pm_opendir = gtk_menu_item_new_with_label ("Open in New Window");
   gtk_widget_ref (pm_opendir);
   gtk_object_set_data_full (GTK_OBJECT (pmenu), "pm_opendir", pm_opendir,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -750,14 +741,14 @@ create_pmenu (void)
   gtk_container_add (GTK_CONTAINER (pmenu), separator4);
   gtk_widget_set_sensitive (separator4, FALSE);
 
-  pm_delete = gtk_menu_item_new_with_label ("Delete selected");
+  pm_delete = gtk_menu_item_new_with_label ("Move to Trash");
   gtk_widget_ref (pm_delete);
   gtk_object_set_data_full (GTK_OBJECT (pmenu), "pm_delete", pm_delete,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (pm_delete);
   gtk_container_add (GTK_CONTAINER (pmenu), pm_delete);
 
-  pm_attribute = gtk_menu_item_new_with_label ("Change Attributes");
+  pm_attribute = gtk_menu_item_new_with_label ("Get Info...");
   gtk_widget_ref (pm_attribute);
   gtk_object_set_data_full (GTK_OBJECT (pmenu), "pm_attribute", pm_attribute,
                             (GtkDestroyNotify) gtk_widget_unref);
