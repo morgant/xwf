@@ -124,7 +124,7 @@ create_xfi (void)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (mfile), mfile_menu);
 
-  msave = gtk_menu_item_new_with_mnemonic ("_Save as...");
+  msave = gtk_menu_item_new_with_mnemonic ("_Save As...");
   gtk_widget_ref (msave);
   gtk_object_set_data_full (GTK_OBJECT (xfi), "msave", msave,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -132,7 +132,7 @@ create_xfi (void)
   gtk_container_add (GTK_CONTAINER (mfile_menu), msave);
   gtk_tooltips_set_tip (tooltips, msave, "Save result as plain text", NULL);
   gtk_widget_add_accelerator (msave, "activate", accel_group,
-                              GDK_s, GDK_MOD1_MASK,
+                              GDK_s, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
   separator1 = gtk_menu_item_new ();
@@ -151,7 +151,7 @@ create_xfi (void)
   gtk_container_add (GTK_CONTAINER (mfile_menu), mquit);
   gtk_tooltips_set_tip (tooltips, mquit, "Quit the Application", NULL);
   gtk_widget_add_accelerator (mquit, "activate", accel_group,
-                              GDK_q, GDK_MOD1_MASK,
+                              GDK_q, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
   medit = gtk_menu_item_new_with_mnemonic ("_Edit");
@@ -169,6 +169,7 @@ create_xfi (void)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (medit), medit_menu);
 
+  /*
   m_select_all = gtk_menu_item_new_with_mnemonic ("Select _all");
   gtk_widget_ref (m_select_all);
   gtk_object_set_data_full (GTK_OBJECT (xfi), "m_select_all", m_select_all,
@@ -178,15 +179,16 @@ create_xfi (void)
   gtk_widget_add_accelerator (m_select_all, "activate", accel_group,
                               GDK_a, GDK_MOD1_MASK,
                               GTK_ACCEL_VISIBLE);
+  */
 
-  m_unselect_all = gtk_menu_item_new_with_mnemonic ("_Unselect all");
+  m_unselect_all = gtk_menu_item_new_with_mnemonic ("_Deselect");
   gtk_widget_ref (m_unselect_all);
   gtk_object_set_data_full (GTK_OBJECT (xfi), "m_unselect_all", m_unselect_all,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (m_unselect_all);
   gtk_container_add (GTK_CONTAINER (medit_menu), m_unselect_all);
   gtk_widget_add_accelerator (m_unselect_all, "activate", accel_group,
-                              GDK_u, GDK_MOD1_MASK,
+                              GDK_a, GDK_SHIFT_MASK|GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
   mhelp = gtk_menu_item_new_with_mnemonic ("_Help");
@@ -211,9 +213,6 @@ create_xfi (void)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (mabout);
   gtk_container_add (GTK_CONTAINER (mhelp_menu), mabout);
-  gtk_widget_add_accelerator (mabout, "activate", accel_group,
-                              GDK_a, GDK_CONTROL_MASK,
-                              GTK_ACCEL_VISIBLE);
 
   hseparator = gtk_hseparator_new ();
   gtk_widget_ref (hseparator);
@@ -543,9 +542,11 @@ create_xfi (void)
   gtk_signal_connect (GTK_OBJECT (mquit), "activate",
                       GTK_SIGNAL_FUNC (on_mquit_activate),
                       NULL);
+  /*
   gtk_signal_connect (GTK_OBJECT (m_select_all), "activate",
                       GTK_SIGNAL_FUNC (on_m_select_all),
                       NULL);
+  */
   gtk_signal_connect (GTK_OBJECT (m_unselect_all), "activate",
                       GTK_SIGNAL_FUNC (on_m_unselect_all),
                       NULL);
