@@ -635,7 +635,7 @@ create_wabout (void)
   gtk_widget_show (label1);
   gtk_box_pack_start (GTK_BOX (vbox), label1, FALSE, FALSE, 0);
 
-  label2 = gtk_label_new ("(c) rasca");
+  label2 = gtk_label_new ("(c) 1999-2000 rasca\n(c) 2021 Morgan Aldridge");
   gtk_widget_ref (label2);
   gtk_object_set_data_full (GTK_OBJECT (wabout), "label2", label2,
                             (GtkDestroyNotify) gtk_widget_unref);
