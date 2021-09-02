@@ -13,57 +13,57 @@ all: xat xcp xfi xwf
 #
 # lib-src
 #
-lib-src/adouble.o: lib-src/adouble.c
+lib-src/adouble.o: lib-src/adouble.c lib-src/adouble.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		`pkg-config --cflags glib-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-lib-src/entry.o: lib-src/entry.c
+lib-src/entry.o: lib-src/entry.c lib-src/entry.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		`pkg-config --cflags glib-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-lib-src/gtk_dlg.o: lib-src/gtk_dlg.c
+lib-src/gtk_dlg.o: lib-src/gtk_dlg.c lib-src/gtk_dlg.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-I. \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-lib-src/gtk_dnd.o: lib-src/gtk_dnd.c
+lib-src/gtk_dnd.o: lib-src/gtk_dnd.c lib-src/gtk_dnd.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-lib-src/gtk_exec.o: lib-src/gtk_exec.c
+lib-src/gtk_exec.o: lib-src/gtk_exec.c lib-src/gtk_exec.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-lib-src/gtk_util.o: lib-src/gtk_util.c
+lib-src/gtk_util.o: lib-src/gtk_util.c lib-src/gtk_util.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-lib-src/io.o: lib-src/io.c
-	$(CC) $(CFLAGS) $(DFLAGS) -c $? -o $@
+lib-src/io.o: lib-src/io.c lib-src/io.h
+	$(CC) $(CFLAGS) $(DFLAGS) -c $*.c -o $@
 
-lib-src/lnk.o: lib-src/lnk.c
+lib-src/lnk.o: lib-src/lnk.c lib-src/lnk.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		`pkg-config --cflags glib-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-lib-src/mailcap.o: lib-src/mailcap.c
-	$(CC) $(CFLAGS) $(DFLAGS) -c $? -o $@
+lib-src/mailcap.o: lib-src/mailcap.c lib-src/mailcap.h
+	$(CC) $(CFLAGS) $(DFLAGS) -c $*.c -o $@
 
-lib-src/reg.o: lib-src/reg.c
+lib-src/reg.o: lib-src/reg.c lib-src/reg.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		`pkg-config --cflags glib-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-lib-src/uri.o: lib-src/uri.c
+lib-src/uri.o: lib-src/uri.c lib-src/uri.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		`pkg-config --cflags glib-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
 #
 # xat
@@ -74,23 +74,23 @@ xat-src/main.o: xat-src/main.c
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
 		-c $? -o $@
 
-xat-src/callbacks.o: xat-src/callbacks.c
+xat-src/callbacks.o: xat-src/callbacks.c xat-src/callbacks.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-xat-src/gui.o: xat-src/gui.c
+xat-src/gui.o: xat-src/gui.c xat-src/gui.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-xat-src/support.o: xat-src/support.c
+xat-src/support.o: xat-src/support.c xat-src/support.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
 xat: lib-src/entry.o lib-src/mailcap.o lib-src/gtk_util.o lib-src/gtk_dlg.o lib-src/gtk_dnd.o xat-src/main.o xat-src/callbacks.o xat-src/gui.o xat-src/support.o
 	$(CC) $(CFLAGS) $(DFLAGS) \
@@ -109,11 +109,11 @@ xcp-src/xcp.o: xcp-src/xcp.c
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
 		-c $? -o $@
 
-xcp-src/xcp_gui.o: xcp-src/xcp_gui.c
+xcp-src/xcp_gui.o: xcp-src/xcp_gui.c xcp-src/xcp_gui.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
 xcp: lib-src/gtk_dlg.o lib-src/gtk_dnd.o lib-src/entry.o lib-src/io.o lib-src/adouble.o xcp-src/xcp.o xcp-src/xcp_gui.o
 	$(CC) $(CFLAGS) $(DFLAGS) \
@@ -132,23 +132,23 @@ xfi-src/main.o: xfi-src/main.c
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
 		-c $? -o $@
 
-xfi-src/callbacks.o: xfi-src/callbacks.c
+xfi-src/callbacks.o: xfi-src/callbacks.c xfi-src/callbacks.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-xfi-src/gui.o: xfi-src/gui.c
+xfi-src/gui.o: xfi-src/gui.c xfi-src/gui.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-xfi-src/support.o: xfi-src/support.c
+xfi-src/support.o: xfi-src/support.c xfi-src/support.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
 xfi: lib-src/reg.o lib-src/uri.o lib-src/io.o lib-src/entry.o xfi-src/main.o xfi-src/callbacks.o xfi-src/gui.o xfi-src/support.o
 	$(CC) $(CFLAGS) $(DFLAGS) \
@@ -167,48 +167,48 @@ xwf-src/xwf.o: xwf-src/xwf.c
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
 		-c $? -o $@
 
-xwf-src/gtk_get.o: xwf-src/gtk_get.c
+xwf-src/gtk_get.o: xwf-src/gtk_get.c xwf-src/gtk_get.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-xwf-src/history.o: xwf-src/history.c
+xwf-src/history.o: xwf-src/history.c xwf-src/history.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-xwf-src/top.o: xwf-src/top.c
+xwf-src/top.o: xwf-src/top.c xwf-src/top.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-xwf-src/xwf_dnd.o: xwf-src/xwf_dnd.c
+xwf-src/xwf_dnd.o: xwf-src/xwf_dnd.c xwf-src/xwf_dnd.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-xwf-src/xwf_gui.o: xwf-src/xwf_gui.c
+xwf-src/xwf_gui.o: xwf-src/xwf_gui.c xwf-src/xwf_gui.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-xwf-src/xwf_icon.o: xwf-src/xwf_icon.c
+xwf-src/xwf_icon.o: xwf-src/xwf_icon.c xwf-src/xwf_icon.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		-I. \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
-xwf-src/xwf_misc.o: xwf-src/xwf_misc.c
+xwf-src/xwf_misc.o: xwf-src/xwf_misc.c xwf-src/xwf_misc.h
 	$(CC) $(CFLAGS) $(DFLAGS) \
 		-Ilib-src \
 		`pkg-config --cflags glib-2.0 gtk+-2.0` \
-		-c $? -o $@
+		-c $*.c -o $@
 
 xwf: lib-src/uri.o lib-src/io.o lib-src/gtk_dlg.o lib-src/gtk_dnd.o lib-src/entry.o lib-src/gtk_util.o lib-src/reg.o lib-src/mailcap.o lib-src/gtk_exec.o lib-src/lnk.o xwf-src/xwf.o xwf-src/gtk_get.o xwf-src/history.o xwf-src/top.o xwf-src/xwf_dnd.o xwf-src/xwf_gui.o xwf-src/xwf_icon.o xwf-src/xwf_misc.o
 	$(CC) $(CFLAGS) $(DFLAGS) \
