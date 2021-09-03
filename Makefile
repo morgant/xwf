@@ -1,7 +1,7 @@
 PREFIX=/usr/local
 
 DFLAGS=-DHAVE_CONFIG_H \
-	-DVERSION=\"0.9.7\" \
+	-DVERSION=\"0.10\" \
 	-DDATA_DIR=\"$(PREFIX)/share\" \
 	-DXWF_RC=\"xwf.rc\" \
 	-DPLUGINDIR=\"$(PREFIX)/lib/xwf\" \

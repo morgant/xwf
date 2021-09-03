@@ -4,8 +4,8 @@
     
                                                         X Window Filemanager
                                                                             
-   Version 0.9.7 - © Rasca, Berlin 1999 - 2000, published under the
-   [1]GNU GPL
+   Version 0.10 - © 1999-2000 Rasca Gmelch, © 2021 Morgan Aldridge.
+   Published under the [1]GNU GPL
 
    Warning: This is a beta release, don't use it to copy or move critical
    data!
@@ -29,8 +29,6 @@
           + [10]XDND, Drag and Drop protocol
           + [11]XFCE, Desktop environment with modified xwf version
        
-    Morgan Aldridge, 22. Aug 2021
-
 References
 
    1. https://github.com/morgant/xwf/blob/main/COPYING
