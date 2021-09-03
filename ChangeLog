@@ -1,3 +1,18 @@
+03.09.2021
+  - released 0.10 (first release by Morgan Aldridge)
+  - Removed xap & xpg (Issue #1)
+  - Updated from GTK+ 1.2 to 2.x (Issue #2)
+  - Fixed error dragging file onto executable in xwf (Issue #14)
+  - Search PATH for external commands instead of hard-coded paths (Issue #5)
+  - Replaced nice() calls with setpriority() (Issue #9)
+  - Improved contextual menu items & keyboard shortcuts (Issues #7, #11, #19)
+  - xwf prompts to confirm emptying trash (Issue #12)
+  - Updated xwf About dialog (Issue #18)
+  - Fixed crash when moving (not copying) files via drag & drop (Issue #13)
+  - Updated xfi to remove Linux-specific find parameters (Issue #10)
+  - Fixed xfi not performing actions on search results (Issue #22)
+  - Replaced GNU autotools & TCL build system with Makefile (Issue #6)
+
 12.09.2000
 	- released 0.9.7
 	- xcp-src/xcp_gui.c: fixed typo (override -> overwrite)
